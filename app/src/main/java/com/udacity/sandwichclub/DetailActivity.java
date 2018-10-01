@@ -79,25 +79,38 @@ public class DetailActivity extends AppCompatActivity {
     private void populateAliasTextView(Sandwich sandwich) {
         if (!sandwich.getAlsoKnownAs().isEmpty()) {
             akaTextView = findViewById(R.id.also_known_tv);
+            akaTextView.setText(delimitedText(sandwich.getAlsoKnownAs()));
         } else {
             akaLayout = findViewById(R.id.aka_container);
+            akaLayout.setVisibility(View.INVISIBLE);
         }
     }
 
     private void populateIngredientsTextView(Sandwich sandwich) {
         if (!sandwich.getIngredients().isEmpty()) {
             ingredientsTextView = findViewById(R.id.ingredients_tv);
+            ingredientsTextView.setText(delimitedText(sandwich.getIngredients()));
         } else {
             ingredientsLayout = findViewById(R.id.ingredients_container);
+            ingredientsLayout.setVisibility(View.INVISIBLE);
         }
     }
 
     private void populatePlaceOfOriginTextView(Sandwich sandwich) {
         placeOfOriginTextView = findViewById(R.id.origin_tv);
+        placeOfOriginTextView.setText(sandwich.getPlaceOfOrigin());
     }
 
     private void populateDescriptionTextView(Sandwich sandwich) {
         descriptionTextView = findViewById(R.id.description_tv);
+        descriptionTextView.setText(sandwich.getDescription());
     }
 
+    private String delimitedText(List<String> items) {
+        String delimitedString = "";
+        for (String item: items) {
+            delimitedString += item + "\n";
+        }
+        return delimitedString;
+    }
 }
