@@ -1,27 +1,27 @@
 package com.udacity.sandwichclub.utils;
-
+import android.content.Context;
+import android.content.res.Resources;
+import com.udacity.sandwichclub.R;
 import com.udacity.sandwichclub.model.Sandwich;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JsonUtils {
 
-    public static Sandwich parseSandwichJson(String json) {
+    public static Sandwich parseSandwichJson(String json, Context context) {
         Sandwich sandwich = null;
 
         try {
+            Resources res = context.getResources();
             JSONObject sandwichJSONResponse = new JSONObject(json);
-            JSONObject sandwichNameJSON = sandwichJSONResponse.getJSONObject("name");
-            String mainName = sandwichNameJSON.getString("mainName");
+            JSONObject sandwichNameJSON = sandwichJSONResponse.getJSONObject(res.getString(R.string.name));
+            String mainName = sandwichNameJSON.getString(res.getString(R.string.mainName));
 
-            JSONArray sandwichAliasArray = sandwichNameJSON.getJSONArray("alsoKnownAs");
-            JSONArray ingredientsArray = sandwichJSONResponse.getJSONArray("ingredients");
+            JSONArray sandwichAliasArray = sandwichNameJSON.getJSONArray(res.getString(R.string.alsoKnownAs));
+            JSONArray ingredientsArray = sandwichJSONResponse.getJSONArray(res.getString(R.string.ingredients));
 
 
             List<String> sandwichAliasList = new ArrayList<>();
@@ -34,9 +34,9 @@ public class JsonUtils {
                 ingredientsList.add(ingredientsArray.getString(i));
             }
 
-            String placeOfOrigin = sandwichJSONResponse.getString("placeOfOrigin");
-            String description = sandwichJSONResponse.getString("description");
-            String image = sandwichJSONResponse.getString("image");
+            String placeOfOrigin = sandwichJSONResponse.getString(res.getString(R.string.placeOfOrigin));
+            String description = sandwichJSONResponse.getString(res.getString(R.string.description));
+            String image = sandwichJSONResponse.getString(res.getString(R.string.image));
 
             sandwich = new Sandwich(mainName, sandwichAliasList, placeOfOrigin, description, image, ingredientsList);
         } catch (JSONException e) {
